@@ -10,25 +10,25 @@ import os
 
 def run_command(command, description):
     """Run a command and handle errors"""
-    print(f"\n🔄 {description}...")
+    print(f"\n{description}...")
     try:
         result = subprocess.run(command, shell=True,
                                 check=True, capture_output=True, text=True)
-        print(f"✅ {description} completed successfully")
+        print(f"{description} completed successfully")
         return True
     except subprocess.CalledProcessError as e:
-        print(f"❌ {description} failed:")
+        print(f"{description} failed:")
         print(f"Error: {e.stderr}")
         return False
 
 
 def main():
-    print("🔧 Fixing scikit-learn installation on Windows")
+    print("Fixing scikit-learn installation on Windows")
     print("=" * 50)
 
     # Check if virtual environment exists
     if not os.path.exists("venv"):
-        print("❌ Virtual environment not found. Please run setup first.")
+        print("Virtual environment not found. Please run setup first.")
         return
 
     pip_cmd = "venv\\Scripts\\pip"
@@ -54,11 +54,11 @@ def main():
 
     for command, description in methods:
         if run_command(command, description):
-            print("✅ scikit-learn installed successfully!")
+            print("scikit-learn installed successfully!")
             break
     else:
-        print("\n❌ All installation methods failed.")
-        print("\n🔧 Alternative solutions:")
+        print("\nAll installation methods failed.")
+        print("\nAlternative solutions:")
         print("1. Install Visual Studio Build Tools:")
         print("   https://visualstudio.microsoft.com/visual-cpp-build-tools/")
         print("\n2. Use Anaconda instead:")
@@ -72,7 +72,7 @@ def main():
     test_cmd = f"venv\\Scripts\\python -c \"import sklearn; print('scikit-learn version:', sklearn.__version__)\""
     run_command(test_cmd, "Testing scikit-learn import")
 
-    print("\n🎉 scikit-learn should now be working!")
+    print("\nscikit-learn should now be working!")
     print("You can now run the main application.")
 
 

@@ -12,17 +12,17 @@ import platform
 
 def run_command(command, description, ignore_errors=False):
     """Run a command and handle errors"""
-    print(f"\n🔄 {description}...")
+    print(f"\n{description}...")
     try:
         result = subprocess.run(command, shell=True,
                                 check=True, capture_output=True, text=True)
-        print(f"✅ {description} completed successfully")
+        print(f"{description} completed successfully")
         return True
     except subprocess.CalledProcessError as e:
         if ignore_errors:
-            print(f"⚠️ {description} had issues but continuing...")
+            print(f"{description} had issues but continuing...")
             return True
-        print(f"❌ {description} failed:")
+        print(f"{description} failed:")
         print(f"Error: {e.stderr}")
         return False
 
@@ -31,11 +31,11 @@ def check_python_version():
     """Check if Python version is 3.8 or higher"""
     version = sys.version_info
     if version.major < 3 or (version.major == 3 and version.minor < 8):
-        print("❌ Python 3.8 or higher is required")
+        print("Python 3.8 or higher is required")
         print(
             f"Current version: {version.major}.{version.minor}.{version.micro}")
         return False
-    print(f"✅ Python {version.major}.{version.minor}.{version.micro} detected")
+    print(f"Python {version.major}.{version.minor}.{version.micro} detected")
     return True
 
 
@@ -46,18 +46,18 @@ def check_node_version():
             "node --version", shell=True, capture_output=True, text=True)
         if result.returncode == 0:
             version = result.stdout.strip()
-            print(f"✅ Node.js {version} detected")
+            print(f"Node.js {version} detected")
             return True
     except:
         pass
 
-    print("❌ Node.js not found. Please install Node.js 16 or higher")
+    print("Node.js not found. Please install Node.js 16 or higher")
     return False
 
 
 def setup_backend_windows():
     """Set up the Python backend with Windows-specific handling"""
-    print("\n🐍 Setting up Python backend for Windows...")
+    print("\nSetting up Python backend for Windows...")
 
     # Create virtual environment
     venv_command = "python -m venv venv"
@@ -90,14 +90,14 @@ def setup_backend_windows():
         install_cmd = f"{pip_cmd} install {package}"
         if not run_command(install_cmd, f"Installing {package}"):
             print(
-                f"⚠️ Failed to install {package}, trying alternative method...")
+                f"Failed to install {package}, trying alternative method...")
             # Try with --only-binary flag
             alt_cmd = f"{pip_cmd} install --only-binary=all {package}"
             if not run_command(alt_cmd, f"Installing {package} (binary only)", ignore_errors=True):
-                print(f"❌ Could not install {package}")
+                print(f"Could not install {package}")
 
     # Special handling for scikit-learn
-    print("\n🔬 Installing scikit-learn...")
+    print("\nInstalling scikit-learn...")
     sklearn_commands = [
         f"{pip_cmd} install --only-binary=all scikit-learn>=1.3.0",
         f"{pip_cmd} install scikit-learn>=1.3.0",
@@ -111,12 +111,12 @@ def setup_backend_windows():
             break
 
     if not sklearn_installed:
-        print("⚠️ Could not install scikit-learn. Trying conda-forge...")
+        print("Could not install scikit-learn. Trying conda-forge...")
         print("Please try installing Anaconda/Miniconda and run:")
         print("conda install -c conda-forge scikit-learn")
         print("Then rerun this setup script.")
 
-    print(f"\n📝 To activate the virtual environment, run:")
+    print(f"\nTo activate the virtual environment, run:")
     print("   venv\\Scripts\\activate")
 
     return True
@@ -124,11 +124,11 @@ def setup_backend_windows():
 
 def setup_frontend():
     """Set up the React frontend"""
-    print("\n⚛️ Setting up React frontend...")
+    print("\nSetting up React frontend...")
 
     # Change to frontend directory
     if not os.path.exists("frontend"):
-        print("❌ Frontend directory not found")
+        print("Frontend directory not found")
         return False
 
     # Install npm dependencies
@@ -146,12 +146,12 @@ def create_directories():
     for directory in directories:
         if not os.path.exists(directory):
             os.makedirs(directory)
-            print(f"✅ Created directory: {directory}")
+            print(f"Created directory: {directory}")
 
 
 def test_installation():
     """Test if the installation was successful"""
-    print("\n🧪 Testing installation...")
+    print("\nTesting installation...")
 
     test_script = """
 import sys
@@ -159,27 +159,27 @@ sys.path.insert(0, 'venv/Lib/site-packages')
 
 try:
     import fastapi
-    print("✅ FastAPI imported successfully")
+    print("FastAPI imported successfully")
 except ImportError as e:
-    print(f"❌ FastAPI import failed: {e}")
+    print(f"FastAPI import failed: {e}")
 
 try:
     import sklearn
-    print("✅ scikit-learn imported successfully")
+    print("scikit-learn imported successfully")
 except ImportError as e:
-    print(f"❌ scikit-learn import failed: {e}")
+    print(f"scikit-learn import failed: {e}")
 
 try:
     import pandas
-    print("✅ pandas imported successfully")
+    print("pandas imported successfully")
 except ImportError as e:
-    print(f"❌ pandas import failed: {e}")
+    print(f"pandas import failed: {e}")
 
 try:
     import nltk
-    print("✅ NLTK imported successfully")
+    print("NLTK imported successfully")
 except ImportError as e:
-    print(f"❌ NLTK import failed: {e}")
+    print(f"NLTK import failed: {e}")
 """
 
     # Write test script to file
@@ -197,8 +197,8 @@ except ImportError as e:
 
 def print_next_steps():
     """Print instructions for running the application"""
-    print("\n🎉 Setup completed!")
-    print("\n📋 Next steps:")
+    print("\nSetup completed!")
+    print("\nNext steps:")
     print("\n1. Activate the virtual environment:")
     print("   venv\\Scripts\\activate")
 
@@ -216,10 +216,10 @@ def print_next_steps():
     print("\n5. Open your browser and go to:")
     print("   http://localhost:3000")
 
-    print("\n🔗 API Documentation will be available at:")
+    print("\nAPI Documentation will be available at:")
     print("   http://localhost:8000/docs")
 
-    print("\n⚠️ If you encounter issues with scikit-learn:")
+    print("\nIf you encounter issues with scikit-learn:")
     print("   1. Install Visual Studio Build Tools from:")
     print("      https://visualstudio.microsoft.com/visual-cpp-build-tools/")
     print("   2. Or install Anaconda and use conda instead of pip")
@@ -227,12 +227,12 @@ def print_next_steps():
 
 def main():
     """Main setup function"""
-    print("🤖 Smart News Classifier Setup (Windows)")
+    print("Smart News Classifier Setup (Windows)")
     print("=" * 45)
 
     # Check if we're on Windows
     if platform.system() != "Windows":
-        print("⚠️ This script is designed for Windows. Use setup.py for other platforms.")
+        print("This script is designed for Windows. Use setup.py for other platforms.")
         return
 
     # Check prerequisites
@@ -247,7 +247,7 @@ def main():
 
     # Setup backend
     if not setup_backend_windows():
-        print("❌ Backend setup had issues")
+        print("Backend setup had issues")
         print("You may need to install Visual Studio Build Tools or use Anaconda")
 
     # Test installation
@@ -255,7 +255,7 @@ def main():
 
     # Setup frontend
     if not setup_frontend():
-        print("❌ Frontend setup failed")
+        print("Frontend setup failed")
         sys.exit(1)
 
     # Print next steps

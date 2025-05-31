@@ -13,10 +13,10 @@ import time
 def check_virtual_env():
     """Check if virtual environment is activated"""
     if hasattr(sys, 'real_prefix') or (hasattr(sys, 'base_prefix') and sys.base_prefix != sys.prefix):
-        print("✅ Virtual environment detected")
+        print("Virtual environment detected")
         return True
     else:
-        print("⚠️  Virtual environment not detected")
+        print("Virtual environment not detected")
         print("Please activate the virtual environment first:")
         print("   Windows: venv\\Scripts\\activate")
         print("   macOS/Linux: source venv/bin/activate")
@@ -36,17 +36,17 @@ def check_dependencies():
             missing_packages.append(package)
 
     if missing_packages:
-        print(f"❌ Missing packages: {', '.join(missing_packages)}")
+        print(f"Missing packages: {', '.join(missing_packages)}")
         print("Please install requirements: pip install -r requirements.txt")
         return False
 
-    print("✅ All required packages are installed")
+    print("All required packages are installed")
     return True
 
 
 def setup_nltk_data():
     """Download required NLTK data"""
-    print("🔄 Setting up NLTK data...")
+    print("Setting up NLTK data...")
     try:
         import nltk
 
@@ -60,19 +60,19 @@ def setup_nltk_data():
                 print(f"Downloading {item}...")
                 nltk.download(item, quiet=True)
 
-        print("✅ NLTK data setup complete")
+        print("NLTK data setup complete")
         return True
     except Exception as e:
-        print(f"❌ NLTK setup failed: {e}")
+        print(f"NLTK setup failed: {e}")
         return False
 
 
 def start_server():
     """Start the FastAPI server"""
-    print("\n🚀 Starting Smart News Classifier Backend...")
-    print("📍 Server will be available at: http://localhost:8000")
-    print("📖 API Documentation: http://localhost:8000/docs")
-    print("🛑 Press Ctrl+C to stop the server\n")
+    print("\nStarting Smart News Classifier Backend...")
+    print("Server will be available at: http://localhost:8000")
+    print("API Documentation: http://localhost:8000/docs")
+    print("Press Ctrl+C to stop the server\n")
 
     # Change to backend directory
     backend_dir = os.path.join(os.path.dirname(__file__), 'backend')
@@ -86,12 +86,12 @@ def start_server():
             'app.py'
         ], check=True)
     except KeyboardInterrupt:
-        print("\n🛑 Server stopped by user")
+        print("\nServer stopped by user")
     except subprocess.CalledProcessError as e:
-        print(f"❌ Server failed to start: {e}")
+        print(f"Server failed to start: {e}")
         return False
     except FileNotFoundError:
-        print("❌ app.py not found in backend directory")
+        print("app.py not found in backend directory")
         return False
 
     return True
@@ -99,7 +99,7 @@ def start_server():
 
 def main():
     """Main function"""
-    print("🤖 Smart News Classifier - Backend Startup")
+    print("Smart News Classifier - Backend Startup")
     print("=" * 50)
 
     # Check virtual environment
